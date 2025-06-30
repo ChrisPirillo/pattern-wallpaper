@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generative Pattern Wallpaper Studio</title>
+    <meta name="description" content="Explore and create unique generative art patterns for wallpapers and backgrounds with the Generative Pattern Wallpaper Studio. Customize complexity, style, and colors.">
+    <meta name="keywords" content="generative art, pattern generator, wallpaper studio, abstract art, digital art, creative patterns, algorithmic art, fractal art, noise patterns, geometric patterns, organic patterns, visualizer">
+    <link rel="canonical" href="https://pirillo.com/arcade/pattern-wallpaper.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pirillo.com/arcade/pattern-wallpaper.html">
+    <meta property="og:title" content="Generative Pattern Wallpaper Studio">
+    <meta property="og:description" content="Explore and create unique generative art patterns for wallpapers and backgrounds with the Generative Pattern Wallpaper Studio. Customize complexity, style, and colors.">
+    <meta property="og:image" content="https://pirillo.com/arcade/images/pattern-wallpaper.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pirillo.com/arcade/pattern-wallpaper.html">
+    <meta property="twitter:title" content="Generative Pattern Wallpaper Studio">
+    <meta property="twitter:description" content="Explore and create unique generative art patterns for wallpapers and backgrounds with the Generative Pattern Wallpaper Studio. Customize complexity, style, and colors.">
+    <meta property="twitter:image" content="https://pirillo.com/arcade/images/pattern-wallpaper.png">
+    <meta name="twitter:site" content="@ChrisPirillo">
+    <meta name="twitter:creator" content="@ChrisPirillo">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Generative Pattern Wallpaper Studio",
+      "description": "Explore and create unique generative art patterns for wallpapers and backgrounds with the Generative Pattern Wallpaper Studio. Customize complexity, style, and colors.",
+      "url": "https://pirillo.com/arcade/pattern-wallpaper.html",
+      "image": "https://pirillo.com/arcade/images/pattern-wallpaper.png",
+      "author": {
+        "@type": "Person",
+        "name": "Chris Pirillo"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Pirillo.com",
+        "url": "https://pirillo.com/"
+      }
+    }
+    </script>
+
+    <!-- Preconnect and Preload for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+
+    <link rel="preload" href="https://fonts.gstatic.com/s/orbitron/v25/cIfhWS5K_PxS_tBuWgf_G1Q.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html, body {
+            height: 100%; /* Ensure full height for flex container */
+        }
+        body {
+            font-family: 'Orbitron', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #0a0a0a;
+        }
+        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #1f2937; } ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; background: #fff; border: 3px solid #4f46e5; cursor: pointer; border-radius: 50%; margin-top: -9px; transition: all .2s ease-in-out; }
+        input[type="range"]::-moz-range-thumb { width: 24px; height: 24px; background: #fff; border: 3px solid #4f46e5; cursor: pointer; border-radius: 50%; border: none; }
+        input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.1); }
+        .control-element:focus-visible, .btn:focus-visible { outline: 3px solid #818cf8; outline-offset: 2px; }
+        #wallpaperCanvas { transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; }
+        .gradient-text { background: linear-gradient(90deg, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .btn-glow { box-shadow: 0 0 8px #a78bfa, 0 0 15px #a78bfa; }
+        #loader-bar { position: absolute; top: 0; left: 0; width: 0%; height: 4px; background: #a78bfa; transition: width 0.1s ease-out, opacity 0.5s ease-in-out; z-index: 50; opacity: 0; }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1CQ4D3VQ3L"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1CQ4D3VQ3L');
+    </script>
+
+    <div class="flex flex-col md:flex-row min-h-screen overflow-hidden"> <!-- Added overflow-hidden to main container -->
+        <!-- CONTROLS PANEL -->
+        <aside class="w-full md:w-96 bg-gray-900/80 backdrop-blur-sm border-r border-gray-800 p-6 shadow-2xl overflow-y-auto flex-shrink-0"> <!-- Added flex-shrink-0 -->
+            <div class="space-y-6">
+                <div class="text-center mb-4">
+                    <h1 class="text-3xl font-bold gradient-text">Generative Pattern</h1>
+                     <p class="text-violet-400 mt-1 text-sm tracking-widest">WALLPAPER STUDIO</p>
+                </div>
+
+                <!-- Pattern Controls -->
+                <div>
+                    <label for="patternType" class="block text-sm font-medium text-gray-400 mb-2">Pattern</label>
+                    <select id="patternType" class="control-element w-full bg-gray-800 border border-gray-700 rounded-md py-3 px-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+                        <optgroup label="Fractal & Recursive">
+                            <option value="lSystemPlant">L-System Plant</option>
+                            <option value="mandala">Mandala</option>
+                            <option value="fractalTree">Fractal Tree</option>
+                            <option value="recursiveCarpet">Recursive Carpet</option>
+                            <option value="dragonCurve">Dragon Curve</option>
+                            <option value="chaoticPendulum">Chaotic Pendulum</option>
+                            <option value="cliffordAttractor">Clifford Attractor</option>
+                            <option value="deJongAttractor">De Jong Attractor</option>
+                            <option value="apollonianGasket">Apollonian Gasket</option>
+                            <option value="barnsleyFern">Barnsley Fern</option>
+                            <option value="mandelbrotSet">Mandelbrot Set</option>
+                        </optgroup>
+                        <optgroup label="Geometric & Tiling">
+                            <option value="hexGrid">Hex Grid</option>
+                            <option value="truchetTiles">Truchet Tiles</option>
+                            <option value="isometricCubes">Isometric Cubes</option>
+                            <option value="quadtree">Quadtree</option>
+                            <option value="weave">Weave</option>
+                            <option value="dotMatrix">Dot Matrix</option>
+                            <option value="layeredArcs">Layered Arcs</option>
+                            <option value="recursiveSubdivision">Recursive Subdivision</option>
+                            <option value="lissajous">Lissajous Curves</option>
+                            <option value="tiledLines">Tiled Lines</option>
+                            <option value="spirograph">Spirograph</option>
+                            <option value="ribbons">Ribbons</option>
+                            <option value="triangulation">Triangulation</option>
+                        </optgroup>
+                         <optgroup label="Organic & Noise-Based">
+                            <option value="phyllotaxis">Phyllotaxis</option>
+                            <option value="circlePacking">Circle Packing</option>
+                            <option value="worleyNoise">Worley Noise</option>
+                            <option value="voronoi">Voronoi Cells</option>
+                            <option value="reactionDiffusion">Reaction Diffusion</option>
+                            <option value="perlinFlow">Perlin Flow Field</option>
+                            <option value="marbling">Marbling</option>
+                            <option value="flow">Flow Field</option>
+                            <option value="noise">Gradient Noise</option>
+                            <option value="boids">Boids Simulation</option>
+                            <option value="particleSystem">Particle System</option>
+                        </optgroup>
+                        <optgroup label="Image & Data">
+                            <option value="pixelSort">Pixel Sort</option>
+                            <option value="halftone">Halftone</option>
+                            <option value="dithering">Dithering</option>
+                            <option value="dataGlitch">Data Glitch</option>
+                        </optgroup>
+                        <optgroup label="Abstract & Assorted">
+                            <option value="sunburst">Sunburst</option>
+                            <option value="metropolis">Metropolis</option>
+                            <option value="warpSpeed">Warp Speed</option>
+                            <option value="circuitBoard">Circuit Board</option>
+                            <option value="confetti">Confetti</option>
+                            <option value="waveform">Waveform</option>
+                            <option value="polygonField">Polygon Field</option>
+                            <option value="crystalline">Crystalline Shards</option>
+                            <option value="radiantGradient">Radiant Gradient</option>
+                            <option value="stripes">Dynamic Stripes</option>
+                            <option value="bubbles">Crystal Bubbles</option>
+                            <option value="stringArt">String Art</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- Sliders -->
+                <div>
+                    <label for="complexity" class="block text-sm font-medium text-gray-400 mb-2">Complexity</label>
+                    <input id="complexity" type="range" min="10" max="200" value="80" class="control-element w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer">
+                </div>
+                <div>
+                    <label for="variation" class="block text-sm font-medium text-gray-400 mb-2">Style</label>
+                    <input id="variation" type="range" min="1" max="100" value="50" class="control-element w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer">
+                </div>
+                <!-- NEW: Zoom Slider -->
+                <div>
+                    <label for="zoom" class="block text-sm font-medium text-gray-400 mb-2">Zoom</label>
+                    <input id="zoom" type="range" min="10" max="500" value="100" class="control-element w-full h-2 bg-gray-800 rounded-lg appearance-none cursor-pointer">
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="pt-4 border-t border-gray-800 space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <button id="recolorBgBtn" class="btn w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-md transition duration-300 text-sm">
+                           Background
+                        </button>
+                        <button id="recolorFgBtn" class="btn w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-3 px-4 rounded-md transition duration-300 text-sm">
+                           Pattern Color
+                        </button>
+                    </div>
+                     <div class="grid grid-cols-2 gap-4">
+                        <button id="mutateBtn" class="btn w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-3 px-4 rounded-md transition duration-300 text-sm">
+                            Mutate
+                        </button>
+                        <button id="downloadBtn" class="btn w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-4 rounded-md transition duration-300 btn-glow text-sm">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- WALLPAPER PREVIEW -->
+        <main class="flex-1 flex items-center justify-center p-4 md:p-8 bg-black overflow-hidden"> <!-- Added overflow-hidden to main -->
+             <div id="canvasContainer" class="w-full h-full max-w-7xl aspect-[16/9] shadow-2xl rounded-xl overflow-hidden bg-gray-900 shadow-indigo-500/10">
+                <canvas id="wallpaperCanvas" width="1280" height="720" aria-label="Generative Pattern Preview Canvas"></canvas>
+                <div id="loader-bar"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    // --- DOM ELEMENT SELECTION ---
+    const canvas = document.getElementById('wallpaperCanvas');
+    const ctx = canvas.getContext('2d');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const recolorBgBtn = document.getElementById('recolorBgBtn');
+    const recolorFgBtn = document.getElementById('recolorFgBtn');
+    const mutateBtn = document.getElementById('mutateBtn');
+    const patternType = document.getElementById('patternType');
+    const complexity = document.getElementById('complexity');
+    const variation = document.getElementById('variation');
+    const zoom = document.getElementById('zoom'); // New zoom slider
+    const canvasContainer = document.getElementById('canvasContainer');
+    const loader = document.getElementById('loader-bar');
+
+    // --- STATE & CONFIGURATION ---
+    let width, height;
+    let colorGenerator;
+    let generationTimeout;
+    let currentPatternState = {};
+    let activeWorker = null; // Generic worker variable
+    let activeWorkerUrl = null; // To store the Blob URL for the active worker
+
+    const downloadCanvas = document.createElement('canvas');
+    const downloadCtx = downloadCanvas.getContext('2d');
+    downloadCanvas.width = 1920;
+    downloadCanvas.height = 1080;
+
+    // --- UTILITY FUNCTIONS ---
+    const randInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+    const randFloat = (min, max) => Math.random() * (max - min) + min;
+    const simpleHash = (x, y) => {
+        const str = `${x},${y}`;
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash |= 0; // Convert to 32bit integer
+        }
+        return Math.abs(hash);
+    };
+    const debounce = (func, delay) => {
+        return (...args) => {
+            clearTimeout(generationTimeout);
+            loader.style.opacity = '1';
+            loader.style.width = '100%';
+            generationTimeout = setTimeout(() => {
+                func.apply(this, args);
+                loader.style.opacity = '0';
+                loader.style.width = '0%';
+            }, delay);
+        };
+    };
+
+    const createColorPalette = () => {
+        const baseHue = randInt(0, 360);
+        const scheme = ['analogous', 'complementary', 'triadic', 'split-complementary'][randInt(0, 3)];
+        const hues = [baseHue];
+        if (scheme === 'analogous') { hues.push((baseHue + 30) % 360, (baseHue - 30 + 360) % 360); }
+        else if (scheme === 'complementary') { hues.push((baseHue + 180) % 360); }
+        else if (scheme === 'triadic') { hues.push((baseHue + 120) % 360, (baseHue + 240) % 360); }
+        else if (scheme === 'split-complementary') { hues.push((baseHue + 150) % 360, (baseHue + 210) % 360); }
+        const palette = [];
+        // Generate lighter colors for the foreground
+        for (let i = 0; i < 50; i++) {
+            palette.push(`hsl(${hues[randInt(0, hues.length - 1)]}, ${randInt(70, 100)}%, ${randInt(60, 90)}%)`);
+        }
+        colorGenerator = () => palette[randInt(0, palette.length - 1)];
+    };
+    
+    // --- PATTERN IMPLEMENTATIONS ---
+    const patternImplementations = {};
+    
+    // --- CORE APPLICATION LOGIC ---
+    const generateNewPatternState = () => {
+        const comp = parseInt(complexity.value, 10);
+        const vary = parseInt(variation.value, 10);
+        const zm = parseFloat(zoom.value) / 100; // Get zoom value
+        const selectedPattern = patternType.value;
+        
+        if (patternImplementations[selectedPattern] && patternImplementations[selectedPattern].generateState) {
+            currentPatternState = patternImplementations[selectedPattern].generateState(comp, vary, zm);
+        }
+    };
+
+    const drawCurrentPattern = () => {
+        const selectedPattern = patternType.value;
+        
+        if (!patternImplementations[selectedPattern] || !patternImplementations[selectedPattern].draw) {
+            ctx.fillStyle = '#111827';
+            ctx.fillRect(0,0,width,height);
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.font = '24px Orbitron';
+            ctx.fillText(`Pattern '${selectedPattern}' not implemented.`, width/2, height/2);
+            console.error(`No drawing implementation for ${selectedPattern}`);
+            return;
+        }
+
+        // Terminate existing worker and revoke URL if a new pattern is selected or redrawing
+        if (activeWorker) {
+            activeWorker.terminate();
+            activeWorker = null;
+            if (activeWorkerUrl) {
+                URL.revokeObjectURL(activeWorkerUrl);
+                activeWorkerUrl = null;
+            }
+        }
+        
+        const workerPatterns = {
+            'mandelbrotSet': 'mandelbrot-worker-script',
+            'reactionDiffusion': 'reaction-diffusion-worker-script'
+        };
+
+        if (workerPatterns[selectedPattern]) {
+            const workerScriptId = workerPatterns[selectedPattern];
+            const workerScriptElement = document.getElementById(workerScriptId);
+            if (!workerScriptElement) {
+                console.error(`Worker script with id ${workerScriptId} not found!`);
+                return;
+            }
+            const workerScriptContent = workerScriptElement.textContent;
+            const blob = new Blob([workerScriptContent], { type: 'text/javascript' });
+            activeWorkerUrl = URL.createObjectURL(blob);
+            activeWorker = new Worker(activeWorkerUrl);
+
+            activeWorker.onmessage = (event) => {
+                const { imageData, isDownload } = event.data;
+                const targetCtx = isDownload ? downloadCtx : ctx;
+                const imgData = new ImageData(new Uint8ClampedArray(imageData.data), imageData.width, imageData.height);
+                targetCtx.putImageData(imgData, 0, 0);
+                
+                if (event.data.isDownload) {
+                    canvas.style.opacity = '1';
+                    loader.style.opacity = '0';
+                    loader.style.width = '0%';
+                }
+            };
+
+            activeWorker.onerror = (error) => {
+                console.error("Worker error:", error);
+                canvas.style.opacity = '1';
+                loader.style.opacity = '0';
+                loader.style.width = '0%';
+            };
+
+            ctx.fillStyle = currentPatternState.bg;
+            ctx.fillRect(0, 0, width, height);
+            downloadCtx.fillStyle = currentPatternState.bg;
+            downloadCtx.fillRect(0, 0, downloadCanvas.width, downloadCanvas.height);
+
+            activeWorker.postMessage({
+                type: 'generate',
+                width: width,
+                height: height,
+                state: currentPatternState,
+                isDownload: false
+            });
+            activeWorker.postMessage({
+                type: 'generate',
+                width: 1920,
+                height: 1080,
+                state: currentPatternState,
+                isDownload: true
+            });
+
+            loader.style.opacity = '1';
+            loader.style.width = '100%';
+            canvas.style.opacity = '0.5';
+
+        } else {
+            // For non-worker patterns, draw directly
+            [ctx, downloadCtx].forEach((currentCtx, index) => {
+                const isDownload = index === 1;
+                const currentW = isDownload ? 1920 : width;
+                const currentH = isDownload ? 1080 : height;
+
+                currentCtx.setTransform(1, 0, 0, 1, 0, 0);
+                currentCtx.globalAlpha = 1;
+                
+                patternImplementations[selectedPattern].draw(currentCtx, currentW, currentH, currentPatternState);
+            });
+        }
+    };
+
+    const handlePatternChange = () => {
+        canvas.style.opacity = '0.5';
+        debounce(() => {
+            createColorPalette();
+            generateNewPatternState();
+            drawCurrentPattern();
+            canvas.style.opacity = '1';
+        }, 250)();
+    };
+
+    const handleSliderChange = () => {
+         canvas.style.opacity = '0.5';
+        debounce(() => {
+            generateNewPatternState();
+            drawCurrentPattern();
+            canvas.style.opacity = '1';
+        }, 250)();
+    };
+    
+    const handleRecolorFg = () => {
+        canvas.style.opacity = '0.5';
+        loader.style.opacity = '1';
+        loader.style.width = '100%';
+        setTimeout(() => {
+            createColorPalette(); // Creates a new light palette
+
+            function updateColorsRecursively(obj) {
+                if (!obj) return;
+                for (const key in obj) {
+                    if (key === 'bg') continue; // Skip the background color
+                    if (typeof obj[key] === 'object' && obj[key] !== null) {
+                        updateColorsRecursively(obj[key]);
+                    } else if (typeof obj[key] === 'string' && (key === 'color' || key.toLowerCase().includes('color'))) {
+                        obj[key] = colorGenerator();
+                    } else if (key === 'colors' && Array.isArray(obj[key])) {
+                        obj[key] = obj[key].map(() => colorGenerator());
+                    }
+                }
+            }
+            
+            updateColorsRecursively(currentPatternState);
+
+            drawCurrentPattern();
+            canvas.style.opacity = '1';
+            loader.style.opacity = '0';
+            loader.style.width = '0%';
+        }, 50);
+    };
+
+    const handleRecolorBg = () => {
+        canvas.style.opacity = '0.5';
+        loader.style.opacity = '1';
+        loader.style.width = '100%';
+        setTimeout(() => {
+            const baseHue = randInt(0, 360);
+            // Generate a new random dark color for the background
+            currentPatternState.bg = `hsl(${baseHue}, ${randInt(10, 40)}%, ${randInt(5, 15)}%)`;
+            
+            drawCurrentPattern();
+            canvas.style.opacity = '1';
+            loader.style.opacity = '0';
+            loader.style.width = '0%';
+        }, 50);
+    };
+
+    const handleMutate = () => {
+        canvas.style.opacity = '0.5';
+        loader.style.opacity = '1';
+        loader.style.width = '100%';
+        
+        setTimeout(() => {
+            const mutationBlacklist = ['bg', 'color', 'colors', 'points', 'count', 'iter', 'maxD', 'depth', 'shards', 'maxCircles'];
+
+            function mutateObject(obj) {
+                if (!obj) return;
+                for (const key in obj) {
+                    if (mutationBlacklist.includes(key)) continue;
+
+                    if (typeof obj[key] === 'object' && obj[key] !== null) {
+                        mutateObject(obj[key]);
+                    } else if (typeof obj[key] === 'number') {
+                        // Mutate numbers by a small random factor
+                        obj[key] *= randFloat(0.8, 1.2);
+                    }
+                }
+            }
+            
+            mutateObject(currentPatternState);
+
+            drawCurrentPattern();
+            canvas.style.opacity = '1';
+            loader.style.opacity = '0';
+            loader.style.width = '0%';
+        }, 50);
+    };
+
+    const handleDownload = () => {
+        const link = document.createElement('a');
+        link.download = `wallpaper-${patternType.value}-${Date.now()}.png`;
+        link.href = downloadCanvas.toDataURL('image/png');
+        link.click();
+    };
+
+    const resizeCanvas = () => {
+        const containerRect = canvasContainer.getBoundingClientRect();
+        if (!containerRect.width || !containerRect.height) return;
+        width = containerRect.width;
+        height = containerRect.height;
+        canvas.width = width;
+        canvas.height = height;
+        generateNewPatternState();
+        drawCurrentPattern();
+        canvas.style.opacity = '1';
+    };
+
+    // --- EVENT LISTENERS & INITIALIZATION ---
+    patternType.addEventListener('input', handlePatternChange);
+    complexity.addEventListener('input', handleSliderChange);
+    variation.addEventListener('input', handleSliderChange);
+    zoom.addEventListener('input', handleSliderChange); // New zoom listener
+    recolorBgBtn.addEventListener('click', handleRecolorBg);
+    recolorFgBtn.addEventListener('click', handleRecolorFg);
+    mutateBtn.addEventListener('click', handleMutate);
+    downloadBtn.addEventListener('click', handleDownload);
+    window.addEventListener('resize', debounce(resizeCanvas, 200));
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        canvas.style.opacity = '0';
+        
+        const allOptions = Array.from(document.querySelectorAll('#patternType option'));
+        allOptions[randInt(0, allOptions.length - 1)].selected = true;
+        complexity.value = randInt(50, 150);
+        variation.value = randInt(10, 90);
+        zoom.value = 100;
+
+        createColorPalette();
+        resizeCanvas();
+    });
+
+    // --- FULL PATTERN IMPLEMENTATIONS ---
+    const PerlinNoise = new (function() {
+        const p = new Uint8Array(512);
+        for (let i = 0; i < 256; i++) p[i] = i;
+        for (let i = 255; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [p[i], p[j]] = [p[j], p[i]]; }
+        for (let i = 0; i < 256; i++) p[i + 256] = p[i];
+        const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
+        const lerp = (t, a, b) => a + t * (b - a);
+        const grad = (hash, x, y, z) => {
+            const h = hash & 15;
+            const u = h < 8 ? x : y;
+            const v = h < 4 ? y : h === 12 || h === 14 ? x : z;
+            return ((h & 1) === 0 ? u : -u) + ((h & 2) === 0 ? v : -v);
+        };
+        this.noise = (x, y, z = 0) => {
+            const X = Math.floor(x) & 255, Y = Math.floor(y) & 255, Z = Math.floor(z) & 255;
+            x -= Math.floor(x); y -= Math.floor(y); z -= Math.floor(z);
+            const u = fade(x), v = fade(y), w = fade(z);
+            const A = p[X] + Y, AA = p[A] + Z, AB = p[A + 1] + Z;
+            const B = p[X + 1] + Y, BA = p[B] + Z, BB = p[B + 1] + Z;
+            return lerp(w, lerp(v, lerp(u, grad(p[AA], x, y, z), grad(p[BA], x - 1, y, z)), lerp(u, grad(p[AB], x, y - 1, z), grad(p[BB], x - 1, y - 1, z))), lerp(v, lerp(u, grad(p[AA + 1], x, y, z - 1), grad(p[BA + 1], x - 1, y, z - 1)), lerp(u, grad(p[AB + 1], x, y - 1, z - 1), grad(p[BB + 1], x - 1, y - 1, z - 1))));
+        };
+    })();
+
+    patternImplementations.sunburst = { generateState: (c, v, z) => ({ bg: '#0a0a0a', o: { x: randFloat(0, 1), y: randFloat(0, 1) }, l: Array.from({ length: c * randInt(2, 8) }, () => ({ a: randFloat(0, Math.PI * 2), len: randFloat(0.1, 1.5) * (v / 100 + 0.5), w: randFloat(1, 15), color: colorGenerator() })), zoom: z }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const size = Math.min(w,h); c.save(); c.translate(w/2, h/2); c.scale(s.zoom, s.zoom); c.translate(-w/2, -h/2); c.translate((w-size)/2, (h-size)/2); const oX = size*s.o.x, oY = size*s.o.y; s.l.forEach(l => { c.beginPath(); c.moveTo(oX, oY); c.lineTo(oX + Math.cos(l.a) * l.len * size, oY + Math.sin(l.a) * l.len * size); c.strokeStyle = l.color; c.lineWidth = l.w; c.stroke(); }); c.restore(); } };
+    patternImplementations.metropolis = { generateState: (c, v) => ({ bg: '#0a0a0a', cols: Array.from({ length: c / randInt(1, 4) }, () => ({ h: randFloat(0.1, 0.9) * (v / 50), w: randInt(1, 5), color: colorGenerator() })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const cW = w / s.cols.length; s.cols.forEach((col, i) => { c.fillStyle = col.color; c.fillRect(i * cW, h - col.h * h, cW - col.w, col.h * h); }); } };
+    patternImplementations.warpSpeed = { generateState: (c, v) => ({ bg: '#0a0a0a', stars: Array.from({ length: c * randInt(2, 6) }, () => ({ a: randFloat(0, Math.PI * 2), sr: randFloat(0, 50), er: randFloat(50, 1) * (v / 100), lw: randFloat(0.5, 4), color: colorGenerator() })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const C = { x: w / 2, y: h / 2 }; s.stars.forEach(star => { c.beginPath(); c.moveTo(C.x + Math.cos(star.a) * star.sr, C.y + Math.sin(star.a) * star.sr); c.lineTo(C.x + Math.cos(star.a) * (star.sr + star.er * w), C.y + Math.sin(star.a) * (star.sr + star.er * h)); c.strokeStyle = star.color; c.lineWidth = star.lw; c.stroke(); }); } };
+    patternImplementations.tiledLines = { 
+        generateState: (c, v) => ({ 
+            bg: '#0a0a0a', 
+            density: c / randInt(4, 10), 
+            lines: Array.from({ length: 2000 }, () => ({ x1: randFloat(0, 1), y1: randFloat(0, 1), x2: randFloat(0, 1), y2: randFloat(0, 1), w: randFloat(1, 10) * (v / 50), color: colorGenerator() })) 
+        }), 
+        draw: (c, w, h, s) => { 
+            c.fillStyle = s.bg; 
+            c.fillRect(0,0,w,h); 
+            const size = w / s.density; // Scale based on width to fill the canvas
+            for (let y = -size; y < h + size; y += size) { 
+                for (let x = -size; x < w + size; x += size) { 
+                    const l = s.lines[Math.floor(Math.random() * s.lines.length)]; 
+                    c.beginPath(); 
+                    c.moveTo(x + size * l.x1, y + size * l.y1); 
+                    c.lineTo(x + size * l.x2, y + size * l.y2); 
+                    c.strokeStyle = l.color; 
+                    c.lineWidth = l.w; 
+                    c.stroke(); 
+                } 
+            } 
+        } 
+    };
+    patternImplementations.circuitBoard = { generateState: (c, v) => ({ bg: '#0a0a0a', points: c / randInt(2, 8), connections: c / randInt(2, 8), items: [] }), draw: (c, w, h, s) => { if (!s.items.length) { s.items = { points: Array.from({ length: s.points }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1) })), connections: Array.from({ length: s.connections }, () => ({ p1: randInt(0, s.points - 1), p2: randInt(0, s.points - 1), type: Math.random() > 0.5, w: randFloat(1, 6) * (v / 50), color: colorGenerator() })) } }; c.fillStyle = s.bg; c.fillRect(0,0,w,h); const p = s.items.points.map(pt => ({ x: pt.x * w, y: pt.y * h })); s.items.connections.forEach(con => { if (!p[con.p1] || !p[con.p2]) return; const p1 = p[con.p1], p2 = p[con.p2]; c.beginPath(); c.moveTo(p1.x, p1.y); if (con.type) { c.lineTo(p2.x, p1.y); c.lineTo(p2.x, p2.y); } else { c.lineTo(p1.x, p2.y); c.lineTo(p2.x, p2.y); } c.strokeStyle = con.color; c.lineWidth = con.w; c.stroke(); }); } };
+    patternImplementations.confetti = { generateState: (c, v) => ({ bg: '#0a0a0a', items: Array.from({ length: c * randInt(5, 15) }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1), r: randFloat(0, Math.PI * 2), size: randFloat(5, 50) * (v / 100 + 0.5), type: Math.random() > 0.5, color: colorGenerator() })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); s.items.forEach(i => { c.save(); c.fillStyle = i.color; c.translate(i.x * w, i.y * h); c.rotate(i.r); if (i.type) c.fillRect(-i.size / 2, -i.size / 2, i.size, i.size); else { c.beginPath(); c.arc(0, 0, i.size / 2, 0, Math.PI * 2); c.fill(); } c.restore(); }); } };
+    patternImplementations.waveform = { generateState: (c, v) => ({ bg: '#0a0a0a', lines: Array.from({ length: c / randInt(2, 8) }, () => ({ amp: randFloat(10, 0.2) * (v / 50), freq: randFloat(0.005, 0.05), offset: randFloat(0, 10), w: randFloat(1, 6), color: colorGenerator() })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); s.lines.forEach((l, i) => { c.beginPath(); const yO = (h / s.lines.length) * i; const amp = l.amp * h; c.moveTo(0, yO); for (let x = 0; x < w; x++) { c.lineTo(x, yO + Math.sin(x * l.freq + l.offset) * amp); } c.strokeStyle = l.color; c.lineWidth = l.w; c.stroke(); }); } };
+    patternImplementations.marbling = { generateState: (c, v) => ({ bg: '#0a0a0a', circles: Array.from({ length: c / randInt(4, 10) }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1), rad: randFloat(0.1, 0.5), dist: v * randFloat(1, 4), angles: Array.from({ length: 63 }, () => randInt(2, 10)), color: colorGenerator(), alpha: randFloat(.4, .8) })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); s.circles.forEach(circ => { c.globalAlpha = circ.alpha; c.beginPath(); for (let a = 0; a < Math.PI * 2; a += .1) { const r = circ.rad * w + Math.sin(a * circ.angles[Math.floor(a * 10)]) * circ.dist; c.lineTo(circ.x * w + r * Math.cos(a), circ.y * h + r * Math.sin(a)); } c.closePath(); c.fillStyle = circ.color; c.fill(); }); c.globalAlpha = 1; } };
+    patternImplementations.polygonField = { generateState: (c, v) => ({ bg: '#0a0a0a', polys: Array.from({ length: c / randInt(2, 6) }, () => ({ points: Array.from({ length: randInt(3, 8) }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1) })), fill: Math.random() > 0.5, lw: v / 10, color: colorGenerator(), alpha: randFloat(.4, .8) })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); s.polys.forEach(p => { c.globalAlpha = p.alpha; c.beginPath(); c.moveTo(p.points[0].x * w, p.points[0].y * h); for (let i = 1; i < p.points.length; i++) { c.lineTo(p.points[i].x * w, p.points[i].y * h); } c.closePath(); c.fillStyle = p.color; c.strokeStyle = p.color; c.lineWidth = p.lw; p.fill ? c.fill() : c.stroke(); }); c.globalAlpha = 1; } };
+    patternImplementations.dragonCurve = { generateState: (c, v) => { let inst = 'FX'; const iter = Math.floor(c / 18); for (let i = 0; i < iter; i++) { inst = inst.replace(/F/g, 'f').replace(/X/g, 'X+YF').replace(/Y/g, 'FX-Y'); } return { bg: '#0a0a0a', inst, len: v * randFloat(0.05, 0.2), lw: randFloat(1, 4), color: colorGenerator() }; }, draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); let a = -Math.PI / 2, x = 0, y = 0; let minX = 0, maxX = 0, minY = 0, maxY = 0; for (const char of s.inst) { if (char === 'F' || char === 'f') { x += s.len * Math.cos(a); y += s.len * Math.sin(a); minX = Math.min(minX, x); maxX = Math.max(maxX, x); minY = Math.min(minY, y); maxY = Math.max(maxY, y); } else if (char === '+') { a += Math.PI / 2; } else if (char === '-') { a -= Math.PI / 2; } } const fW = maxX - minX; const fH = maxY - minY; const scale = Math.min(w * 0.9 / fW, h * 0.9 / fH); const oX = (w - fW * scale) / 2 - minX * scale; const oY = (h - fH * scale) / 2 - minY * scale; c.save(); c.translate(oX, oY); c.scale(scale, scale); a = -Math.PI / 2; x = 0; y = 0; c.beginPath(); c.moveTo(x, y); for (const char of s.inst) { if (char === 'F' || char === 'f') { x += s.len * Math.cos(a); y += s.len * Math.sin(a); c.lineTo(x, y); } else if (char === '+') { a += Math.PI / 2; } else if (char === '-') { a -= Math.PI / 2; } } c.strokeStyle = s.color; c.lineWidth = s.lw / scale; c.stroke(); c.restore(); } };
+    patternImplementations.mandala = { generateState: (c, v) => ({ bg: '#0a0a0a', maxL: Math.floor(c / randInt(25, 40)), b: randInt(4, 12), lw: v / 10, startAngle: randFloat(0, Math.PI * 2), colors: Array.from({length: Math.floor(c/25)}, () => colorGenerator()) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.translate(w / 2, h / 2); c.rotate(s.startAngle); function draw(l) { if (l > s.maxL) return; const r = l * (w / 2 / s.maxL * .5); c.beginPath(); c.arc(0, 0, r, 0, Math.PI * 2); c.strokeStyle = s.colors[l % s.colors.length]; c.lineWidth = 1 + l / s.lw; c.stroke(); for (let i = 0; i < s.b; i++) { c.save(); c.rotate(i * Math.PI * 2 / s.b); c.beginPath(); c.moveTo(0, r); c.lineTo(0, r + (w / 2 / s.maxL)); c.stroke(); c.translate(0, r + (w / 2 / s.maxL)); c.scale(.8, .8); draw(l + 1); c.restore(); } } draw(1); } };
+    patternImplementations.fractalTree = { generateState: (c, v, z) => ({ bg: '#0a0a0a', startX: randFloat(0.3, 0.7), maxD: Math.floor(c / randInt(15, 25)), spread: randFloat(.2, 1) * (v / 50), len: randFloat(4, 8), colors: Array.from({length: Math.floor(c/15)}, () => colorGenerator()), zoom: z }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.save(); c.translate(w/2, h/2); c.scale(s.zoom, s.zoom); c.translate(-w/2, -h/2); function drawB(x, y, a, d, l) { if (d > s.maxD) return; c.beginPath(); c.moveTo(x, y); const eX = x + Math.cos(a) * l; const eY = y + Math.sin(a) * l; c.lineTo(eX, eY); c.strokeStyle = s.colors[d % s.colors.length]; c.lineWidth = (s.maxD - d + 1) / s.zoom; c.stroke(); drawB(eX, eY, a - s.spread, d + 1, l * .8); drawB(eX, eY, a + s.spread, d + 1, l * .8); } drawB(w * s.startX, h, -Math.PI / 2, 1, h / s.len); c.restore(); } };
+    patternImplementations.recursiveCarpet = { generateState: (c, v) => ({ bg: '#0a0a0a', maxD: Math.floor(c / randInt(35, 50)), angle: v / 100, colors: Array.from({length: Math.floor(c/35)}, () => colorGenerator()) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); function draw(x, y, wi, he, d) { if (d > s.maxD) return; const nW = wi / 3, nH = he / 3; c.save(); c.translate(x + nW / 2, y + nH / 2); c.rotate(d * s.angle); c.fillStyle = s.colors[d % s.colors.length]; c.fillRect(-nW / 2, -nH / 2, nW, nH); c.restore(); for (let i = 0; i < 3; i++) { for (let j = 0; j < 3; j++) { if (i === 1 && j === 1) continue; draw(x + i * nW, y + j * nH, nW, nH, d + 1); } } } draw(0, 0, w, h, 1); } };
+    patternImplementations.crystalline = { generateState: (c, v) => ({ bg: '#0a0a0a', shards: c / randInt(1, 4), center: { x: randFloat(.4, .6), y: randFloat(.4, .6) }, points: Array.from({ length: Math.floor(c / randInt(1, 4)) * 2 }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1) })), alpha: randFloat(.4, .85) * (v / 100 + .5), lw: randFloat(.5, 4), colors: Array.from({length: Math.floor(c/4)}, () => colorGenerator()) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const cX = s.center.x * w, cY = s.center.y * h; for (let i = 0; i < s.shards; i++) { if (!s.points[i*2] || !s.points[i*2+1]) continue; c.beginPath(); c.moveTo(cX, cY); c.lineTo(s.points[i * 2].x * w, s.points[i * 2].y * h); c.lineTo(s.points[i * 2 + 1].x * w, s.points[i * 2 + 1].y * h); c.closePath(); c.fillStyle = s.colors[i % s.colors.length]; c.globalAlpha = s.alpha; c.fill(); c.strokeStyle = 'rgba(255,255,255,.2)'; c.lineWidth = s.lw; c.stroke(); } c.globalAlpha = 1; } };
+    patternImplementations.radiantGradient = { generateState: (c, v) => ({ stops: Array.from({length: randInt(3,8)}, () => ({color: colorGenerator(), pos: randFloat(0,1)})).sort((a,b) => a.pos - b.pos), p1: { x: randFloat(0, 1), y: randFloat(0, 1) }, p2: { x: randFloat(0, 1), y: randFloat(0, 1) }, r: randFloat(.8, 1.2) }), draw: (c, w, h, s) => { const g = c.createRadialGradient(s.p1.x * w, s.p1.y * h, 0, s.p2.x * w, s.p2.y * h, Math.hypot(w, h) * s.r); s.stops.forEach(stop => g.addColorStop(stop.pos, stop.color)); c.fillStyle = g; c.fillRect(0, 0, w, h); } };
+    
+    patternImplementations.voronoi = { 
+        generateState: (c, v) => ({ 
+            bg: '#0a0a0a', 
+            points: Math.min(c, 75), 
+            lineColor: colorGenerator(), 
+            threshold: v / 25
+        }), 
+        draw: (c, w, h, s) => { 
+            c.fillStyle = s.bg; 
+            c.fillRect(0,0,w,h); 
+            const scale = .25, sw = Math.floor(w * scale), sh = Math.floor(h * scale); 
+            if (sw <= 0 || sh <= 0) return; 
+            
+            const tC = document.createElement('canvas'); 
+            tC.width = sw; 
+            tC.height = sh; 
+            const tX = tC.getContext('2d'); 
+            
+            const p = Array.from({length: s.points}, () => ({ x: randFloat(0, sw), y: randFloat(0, sh) })); 
+            const img = tX.createImageData(sw, sh); 
+            
+            const colorCanvas = document.createElement('canvas');
+            colorCanvas.width = 1;
+            colorCanvas.height = 1;
+            const colorCtx = colorCanvas.getContext('2d');
+            colorCtx.fillStyle = s.lineColor;
+            colorCtx.fillRect(0,0,1,1);
+            const rgb = colorCtx.getImageData(0,0,1,1).data;
+            
+            for (let y = 0; y < sh; y++) { 
+                for (let x = 0; x < sw; x++) { 
+                    let d1 = Infinity, d2 = Infinity; 
+                    for (let i = 0; i < p.length; i++) { 
+                        const d = Math.hypot(x - p[i].x, y - p[i].y); 
+                        if (d < d1) { 
+                            d2 = d1; 
+                            d1 = d; 
+                        } else if (d < d2) { 
+                            d2 = d; 
+                        } 
+                    } 
+                    if (d2 - d1 < s.threshold) { 
+                        const i = (y * sw + x) * 4; 
+                        img.data[i] = rgb[0]; 
+                        img.data[i+1] = rgb[1]; 
+                        img.data[i+2] = rgb[2]; 
+                        img.data[i+3] = 255; 
+                    } 
+                } 
+            } 
+            tX.putImageData(img, 0, 0); 
+            c.imageSmoothingEnabled = false; 
+            c.drawImage(tC, 0, 0, w, h); 
+        } 
+    };
+
+    patternImplementations.triangulation = { generateState: (c, v) => ({ bg: '#0a0a0a', points: Array.from({length: c}, () => [randFloat(0, 1), randFloat(0, 1)]), lw: v / 20, colors: Array.from({length: c * 2}, () => colorGenerator()) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.lineWidth = s.lw; c.lineCap = 'round'; const p = s.points.map(pt => [pt[0] * w, pt[1] * h]); const delaunay = (points) => { let n = points.length, triangles = []; for (let i = 0; i < n; i++) { for (let j = i + 1; j < n; j++) { for (let k = j + 1; k < n; k++) { let x1=points[i][0],y1=points[i][1],x2=points[j][0],y2=points[j][1],x3=points[k][0],y3=points[k][1]; let D = 2*(x1*(y2-y3)+x2*(y3-y1)+x3*(y1-y2));
+                let Ux=((x1*x1+y1*y1)*(y2-y3)+(x2*x2+y2*y2)*(y3-y1)+(x3*x3+y3*y3)*(y1-y2))/D;
+                let Uy=((x1*x1+y1*y1)*(x3-x2)+(x2*x2+y2*y2)*(x1-x3)+(x3*x3+y3*y3)*(x2-x1))/D;
+                let r = Math.hypot(x1-Ux, y1-Uy);
+                let empty = true;
+                for(let l=0;l<n;l++){if(l!==i&&l!==j&&l!==k){if(Math.hypot(points[l][0]-Ux,points[l][1]-Uy)<r){empty=false;break;}}}
+                if(empty)triangles.push([points[i],points[j],points[k]]);
+            } } } return triangles; }; const triangles = delaunay(p); triangles.forEach((t, i) => { c.beginPath(); c.moveTo(t[0][0], t[0][1]); c.lineTo(t[1][0], t[1][1]); c.lineTo(t[2][0], t[2][1]); c.closePath(); c.strokeStyle = s.colors[i % s.colors.length]; c.stroke(); }); } };
+    patternImplementations.stripes = { generateState: (c, v) => ({ bg: '#0a0a0a', stripes: Array.from({ length: c * randInt(1, 4) }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1), r: randFloat(0, Math.PI * 2), w: randFloat(0.05, 0.2) * (v / 50), color: colorGenerator(), alpha: randFloat(.6, 1) })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); s.stripes.forEach(st => { c.save(); c.fillStyle = st.color; c.globalAlpha = st.alpha; c.translate(st.x * w, st.y * h); c.rotate(st.r); c.fillRect(-w * .75, -st.w * h / 2, w * 1.5, st.w * h); c.restore(); }); c.globalAlpha = 1; } };
+    patternImplementations.bubbles = { generateState: (c, v) => ({ bg: '#0a0a0a', bubbles: Array.from({ length: c * randInt(1, 3) }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1), r: randFloat(0.05, 0.25) * (v / 50), color: colorGenerator(), alpha: randFloat(.5, .85) })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); s.bubbles.forEach(b => { c.beginPath(); c.arc(b.x * w, b.y * h, b.r * w, 0, Math.PI * 2); c.fillStyle = b.color; c.globalAlpha = b.alpha; c.fill(); }); c.globalAlpha = 1; } };
+    patternImplementations.noise = { generateState: (c, v) => ({ scale: 250 - c, vary: v, c1: colorGenerator(), c2: colorGenerator() }), draw: (c, w, h, s) => { const tempCtx = document.createElement('canvas').getContext('2d'); const c1 = ((c) => { tempCtx.fillStyle = c; tempCtx.fillRect(0, 0, 1, 1); return tempCtx.getImageData(0, 0, 1, 1).data; })(s.c1); const c2 = ((c) => { tempCtx.fillStyle = c; tempCtx.fillRect(0, 0, 1, 1); return tempCtx.getImageData(0, 0, 1, 1).data; })(s.c2); const noise = (x, y) => (Math.sin(x * s.vary * .0001 + y * .00005) + Math.cos(y * s.vary * .0001 - x * .00005)) * .5; const imgData = c.createImageData(w, h); const data = imgData.data; for (let y = 0; y < h; y++) { for (let x = 0; x < w; x++) { const val = Math.abs(noise(x / s.scale * 100, y / s.scale * 100)); const r = c1[0] + (c2[0] - c1[0]) * val; const g = c1[1] + (c2[1] - c1[1]) * val; const b = c1[2] + (c2[2] - c1[2]) * val; const pI = (y * w + x) * 4; data[pI] = r; data[pI + 1] = g; data[pI + 2] = b; data[pI + 3] = 255; } } c.putImageData(imgData, 0, 0); } };
+    patternImplementations.flow = { generateState: (c, v) => ({ bg: '#0a0a0a', lines: Array.from({ length: c * randInt(10, 20) }, () => ({ x: randFloat(0, 1), y: randFloat(0, 1), angle: (v / 25), color: colorGenerator() })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.globalAlpha = 1; s.lines.forEach(l => { let x = l.x * w, y = l.y * h; for (let j = 0; j < 100; j++) { const angle = (Math.sin(x * .003) + Math.cos(y * .003)) * l.angle; c.beginPath(); c.moveTo(x, y); x += Math.cos(angle) * 5; y += Math.sin(angle) * 5; c.lineTo(x, y); c.strokeStyle = l.color; c.lineWidth = randFloat(.5, 4); c.globalAlpha = randFloat(.1, .5); c.stroke(); } }); c.globalAlpha = 1; } };
+    patternImplementations.hexGrid = { 
+        generateState: (c, v, z) => ({ 
+            bg: '#0a0a0a', 
+            density: c / 2,
+            lw: v / 20, 
+            colors: Array.from({length: 50}, () => colorGenerator()),
+            seed: randFloat(0, 1000),
+            zoom: z
+        }), 
+        draw: (c, w, h, s) => { 
+            c.fillStyle = s.bg; 
+            c.fillRect(0,0,w,h); 
+            c.save();
+            c.translate(w/2, h/2);
+            c.scale(s.zoom, s.zoom);
+            c.translate(-w/2, -h/2);
+            
+            const r = w / s.density;
+            const hR = r * Math.sqrt(3) / 2;
+
+            for (let y = -hR, row = 0; y < h + hR; y += hR, row++) { 
+                for (let x = -r, col = 0; x < w + r; x += r * 1.5, col++) { 
+                    const hx = x + (row % 2) * r * 0.75; 
+                    
+                    c.beginPath(); 
+                    for (let i = 0; i < 6; i++) { 
+                        c.lineTo(hx + r * Math.cos(i * Math.PI / 3), y + r * Math.sin(i * Math.PI / 3)); 
+                    } 
+                    c.closePath(); 
+                    
+                    const hash = simpleHash(col, row + s.seed);
+                    const doFill = (hash % 100) > 50;
+                    const color = s.colors[hash % s.colors.length];
+                    
+                    c.fillStyle = color; 
+                    c.strokeStyle = color; 
+                    c.lineWidth = s.lw / s.zoom; 
+                    doFill ? c.fill() : c.stroke(); 
+                } 
+            } 
+            c.restore();
+        } 
+    };
+    patternImplementations.phyllotaxis = { generateState: (c, v) => ({ bg: '#0a0a0a', n: c * 10, angle: 137.5, c: v / 5, items: Array.from({length: c*10}, () => ({color: colorGenerator()})) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.save(); c.translate(w / 2, h / 2); for (let i = 0; i < s.n; i++) { const a = i * s.angle * Math.PI / 180; const r = s.c * Math.sqrt(i); const x = r * Math.cos(a); const y = r * Math.sin(a); c.beginPath(); c.arc(x, y, 2 + i / 100, 0, Math.PI * 2); c.fillStyle = s.items[i].color; c.fill(); } c.restore(); } };
+    patternImplementations.circlePacking = { generateState: (c, v) => ({ bg: '#0a0a0a', maxCircles: c * 5, minR: v / 10, maxR: v }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const circles = []; for (let i = 0; i < s.maxCircles; i++) { let newCircle = { x: randFloat(0, w), y: randFloat(0, h), r: s.minR }; let valid = true; for (const other of circles) { if (Math.hypot(newCircle.x - other.x, newCircle.y - other.y) < other.r) { valid = false; break; } } if (valid) { for (let j = 0; j < 100; j++) { newCircle.r++; let collision = false; for (const other of circles) { if (Math.hypot(newCircle.x - other.x, newCircle.y - other.y) < newCircle.r + other.r) { collision = true; break; } } if (collision || newCircle.x + newCircle.r > w || newCircle.x - newCircle.r < 0 || newCircle.y + newCircle.r > h || newCircle.y - newCircle.r < 0) { newCircle.r--; break; } if (newCircle.r > s.maxR) break; } newCircle.color = colorGenerator(); circles.push(newCircle); } } circles.forEach(circ => { c.beginPath(); c.arc(circ.x, circ.y, circ.r, 0, Math.PI * 2); c.fillStyle = circ.color; c.fill(); }); } };
+    patternImplementations.truchetTiles = { 
+        generateState: (c, v) => ({ 
+            bg: '#0a0a0a', 
+            density: c / 5, 
+            lw: v / 10, 
+            colors: Array.from({length: 50}, () => colorGenerator()),
+            seed: randFloat(0, 1000)
+        }), 
+        draw: (c, w, h, s) => { 
+            c.fillStyle = s.bg; 
+            c.fillRect(0,0,w,h); 
+            
+            const size = w / s.density; // Tile size proportional to width to fill the canvas
+            c.lineWidth = s.lw; 
+
+            for (let y = -size, row = 0; y < h + size; y += size, row++) { 
+                for (let x = -size, col = 0; x < w + size; x += size, col++) { 
+                    const hash = simpleHash(col, row + s.seed);
+                    const type = (hash % 100) > 50;
+                    const color = s.colors[hash % s.colors.length];
+                    
+                    c.strokeStyle = color; 
+                    c.beginPath(); 
+                    if (type) { 
+                        c.arc(x, y, size / 2, 0, Math.PI / 2); 
+                        c.stroke(); 
+                        c.beginPath(); 
+                        c.arc(x + size, y + size, size / 2, Math.PI, Math.PI * 1.5); 
+                    } else { 
+                        c.arc(x + size, y, size / 2, Math.PI / 2, Math.PI); 
+                        c.stroke(); 
+                        c.beginPath(); 
+                        c.arc(x, y + size, size / 2, Math.PI * 1.5, Math.PI * 2); 
+                    } 
+                    c.stroke(); 
+                } 
+            } 
+        } 
+    };
+    patternImplementations.cliffordAttractor = { generateState: (c, v) => ({ bg: '#0a0a0a', a: randFloat(-3, 3), b: randFloat(-3, 3), d: randFloat(-3, 3), e: randFloat(-3, 3), points: c * 2000, color: colorGenerator() }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); let x = 0, y = 0; c.fillStyle = s.color; c.globalAlpha = .1; c.save(); c.translate(w/2, h/2); const scale = Math.min(w,h) / 4; for (let i = 0; i < s.points; i++) { const nX = Math.sin(s.a * y) + s.d * Math.cos(s.a * x); const nY = Math.sin(s.b * x) + s.e * Math.cos(s.b * y); x = nX; y = nY; c.fillRect(x * scale, y * scale, 2, 2); } c.restore(); c.globalAlpha=1;} };
+    patternImplementations.deJongAttractor = { generateState: (c, v) => ({ bg: '#0a0a0a', a: randFloat(-3, 3), b: randFloat(-3, 3), d: randFloat(-3, 3), e: randFloat(-3, 3), points: c * 2000, color: colorGenerator() }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); let x = 0, y = 0; c.fillStyle = s.color; c.globalAlpha = .1; c.save(); c.translate(w/2, h/2); const scale = Math.min(w,h) / 4; for (let i = 0; i < s.points; i++) { const nX = Math.sin(s.a * y) - Math.cos(s.b * x); const nY = Math.sin(s.d * x) - Math.cos(s.e * y); x = nX; y = nY; c.fillRect(x * scale, y * scale, 2, 2); } c.restore(); c.globalAlpha=1;} };
+    patternImplementations.isometricCubes = { 
+        generateState: (c, v) => ({ 
+            bg: '#0a0a0a', 
+            density: c / 4, 
+            colors: Array.from({length: 50}, () => colorGenerator()),
+            seed: randFloat(0, 1000)
+        }), 
+        draw: (c, w, h, s) => { 
+            c.fillStyle = s.bg; 
+            c.fillRect(0,0,w,h); 
+            
+            const size = w / s.density; // Scale based on width to fill the canvas
+            const hSize = size / 2; 
+            const wSize = size * Math.sqrt(3) / 2; 
+
+            c.save(); 
+            c.translate(w / 2, h / 4); 
+            // Adjust loop bounds to ensure the entire canvas is covered, accounting for the translation
+            for (let y = -hSize - (h/4); y < h * 0.75 + hSize; y += size) { 
+                for (let x = -w/2 - wSize; x < w/2 + wSize; x += wSize) { 
+                    const i = Math.floor(y/size); 
+                    const j = Math.floor(x/wSize); 
+                    
+                    const hash = simpleHash(i, j + s.seed);
+                    const color = s.colors[hash % s.colors.length];
+
+                    c.save(); 
+                    c.translate((x - i*wSize/2), (y + i*hSize)); 
+                    c.beginPath(); 
+                    c.moveTo(0, -hSize); 
+                    c.lineTo(wSize/2, -hSize/2); 
+                    c.lineTo(0, 0); 
+                    c.lineTo(-wSize/2, -hSize/2); 
+                    c.closePath(); 
+                    c.fillStyle = color; 
+                    c.fill();
+                    c.restore(); 
+                } 
+            } 
+            c.restore(); 
+        } 
+    };
+    patternImplementations.quadtree = { generateState: (c, v) => ({ bg: '#0a0a0a', comp: c / 20, vary: v / 100 }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); function subdivide(x, y, wi, he, d) { if (d > s.comp || Math.random() > s.vary) { c.fillStyle = colorGenerator(); c.fillRect(x, y, wi, he); return; } const nW = wi / 2, nH = he / 2; subdivide(x, y, nW, nH, d + 1); subdivide(x + nW, y, nW, nH, d + 1); subdivide(x, y + nH, nW, nH, d + 1); subdivide(x + nW, y + nH, nW, nH, d + 1); } subdivide(0, 0, w, h, 0); } };
+    patternImplementations.lSystemPlant = { generateState: (c, v) => { const rules = { 'F': 'FF-[-F+F+F]+[+F-F-F]' }; let axiom = 'F'; const iter = Math.floor(c / 40); for (let i = 0; i < iter; i++) { let next = ''; for (const char of axiom) { next += rules[char] || char; } axiom = next; } return { bg: '#0a0a0a', startX: randFloat(0.3, 0.7), axiom, len: v * 2, angle: randFloat(15, 30) * Math.PI / 180, color: colorGenerator() }; }, draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.save(); c.translate(w * s.startX, h); c.strokeStyle = s.color; for (const char of s.axiom) { if (char === 'F') { c.beginPath(); c.moveTo(0, 0); c.lineTo(0, -s.len); c.stroke(); c.translate(0, -s.len); } else if (char === '+') { c.rotate(s.angle); } else if (char === '-') { c.rotate(-s.angle); } else if (char === '[') { c.save(); } else if (char === ']') { c.restore(); } } c.restore(); } };
+    patternImplementations.weave = { generateState: (c, v) => ({ bg: '#0a0a0a', size: c / 4, lw: v / 10, count: c / 2, colors: Array.from({length: Math.floor(c/2)*2}, () => colorGenerator()) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const size = w / s.size; c.lineWidth = s.lw; for (let i = 0; i < s.count; i++) { c.strokeStyle = s.colors[i]; c.beginPath(); c.moveTo(i * size, 0); c.bezierCurveTo(i * size, h / 2, w - i * size, h / 2, w - i * size, h); c.stroke(); c.strokeStyle = s.colors[i + Math.floor(s.count)]; c.beginPath(); c.moveTo(0, i * size); c.bezierCurveTo(w / 2, i * size, w / 2, h - i * size, w, h - i * size); c.stroke(); } } };
+    patternImplementations.halftone = { generateState: (c, v) => ({ bg: '#0a0a0a', size: c / 2, vary: v / 50, colors: Array.from({length: 1000}, () => colorGenerator()) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const size = w / s.size; for (let y = 0, i=0; y < h; y += size) { for (let x = 0; x < w; x += size, i++) { const r = (Math.sin(x / w * Math.PI) * Math.sin(y / h * Math.PI)) * size / 2 * s.vary; c.fillStyle = s.colors[i % s.colors.length]; c.beginPath(); c.arc(x + size / 2, y + size / 2, r, 0, Math.PI * 2); c.fill(); } } } };
+    patternImplementations.dotMatrix = { generateState: (c, v) => ({ bg: '#0a0a0a', size: c / 2, vary: v / 100, items: Array.from({length: 1000}, () => ({ r: randFloat(0.1, 1), color: colorGenerator() })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const size = w / s.size; for (let y = 0, i=0; y < h; y += size) { for (let x = 0; x < w; x += size, i++) { const item = s.items[i % s.items.length]; c.fillStyle = item.color; c.beginPath(); c.arc(x + size / 2, y + size / 2, size / 2 * item.r * s.vary, 0, Math.PI * 2); c.fill(); } } } };
+    patternImplementations.layeredArcs = { generateState: (c, v) => ({ bg: '#0a0a0a', layers: c / 5, lw: v / 10, arcs: Array.from({ length: Math.floor(c / 5) }, () => ({ s: randFloat(0, Math.PI), e: randFloat(Math.PI, Math.PI * 2), color: colorGenerator() })) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.lineWidth = s.lw; s.arcs.forEach((arc, i) => { c.strokeStyle = arc.color; c.beginPath(); c.arc(w / 2, h / 2, (i + 1) * w / s.layers, arc.s, arc.e); c.stroke(); }); } };
+    patternImplementations.recursiveSubdivision = { generateState: (c, v) => ({ bg: '#0a0a0a', minSize: 201 - c }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); function subdivide(x, y, wi, he) { if (wi < s.minSize || he < s.minSize || Math.random() > 0.9) { c.fillStyle = colorGenerator(); c.fillRect(x, y, wi, he); return; } const horiz = Math.random() > 0.5; if (horiz && he > s.minSize) { const cut = randFloat(y + he * .2, y + he * .8); subdivide(x, y, wi, cut - y); subdivide(x, cut, wi, he - (cut - y)); } else if (wi > s.minSize) { const cut = randFloat(x + wi * .2, x + wi * .8); subdivide(x, y, cut - x, he); subdivide(cut, y, wi - (cut - x), he); } } subdivide(0, 0, w, h); } };
+    patternImplementations.lissajous = { generateState: (c, v) => ({ bg: '#0a0a0a', a: randInt(1, 10), b: randInt(1, 10), d: randFloat(0, Math.PI * 2), len: c / 10, lw: v / 20, color: colorGenerator() }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); c.save(); c.translate(w / 2, h / 2); c.strokeStyle = s.color; c.lineWidth = s.lw; c.beginPath(); for (let t = 0; t < Math.PI * s.len; t += .01) { const x = Math.sin(s.a * t + s.d) * (w / 2.5); const y = Math.sin(s.b * t) * (h / 2.5); t === 0 ? c.moveTo(x, y) : c.lineTo(x, y); } c.stroke(); c.restore(); } };
+    patternImplementations.boids = { generateState: (c, v) => ({ bg: '#0a0a0a', boids: Array.from({length: c}, () => ({ p: {x: randFloat(0,1), y:randFloat(0,1)}, v: {x:randFloat(-1,1), y:randFloat(-1,1)}, color: colorGenerator() })), iter: v*2 }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const boids = s.boids.map(b => ({ p: {x: b.p.x*w, y: b.p.y*h}, v: b.v, color: b.color })); for(let i=0; i<s.iter; i++) { boids.forEach(b => { b.p.x += b.v.x; b.p.y += b.v.y; b.v.x += (w/2 - b.p.x) * 0.0001; b.v.y += (h/2 - b.p.y) * 0.0001; if(b.p.x < 0 || b.p.x > w) b.v.x *= -1; if(b.p.y < 0 || b.p.y > h) b.v.y *= -1; const mag = Math.hypot(b.v.x, b.v.y); if(mag > 3) { b.v.x = b.v.x/mag * 3; b.v.y = b.v.y/mag * 3; } c.fillStyle = b.color; c.fillRect(b.p.x, b.p.y, 4, 4); }); } } };
+    patternImplementations.particleSystem = { generateState: (c, v) => ({ bg: '#0a0a0a', count: c * 10, life: v, gravity: {x:0, y:0.1} }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const particles = []; for(let i=0; i<s.count; i++) { particles.push({x: w/2, y: h/2, vx: randFloat(-5,5), vy: randFloat(-5,5), life: s.life, color: colorGenerator()}); } function update() { c.fillStyle = 'rgba(10,10,10,0.1)'; c.fillRect(0,0,w,h); particles.forEach((p, i) => { if (p.life <= 0) { particles.splice(i, 1); return; } p.vx += s.gravity.x; p.vy += s.gravity.y; p.x += p.vx; p.y += p.vy; p.life--; c.fillStyle = p.color; c.globalAlpha = p.life / s.life; c.fillRect(p.x, p.y, 2, 2); }); c.globalAlpha = 1; } for(let i=0; i<s.life; i++) update(); } };
+    patternImplementations.dithering = { generateState: (c, v) => ({ bg: '#0a0a0a', c1: colorGenerator(), c2: colorGenerator() }), draw: (c, w, h, s) => { const scale = 0.5; w=Math.floor(w*scale); h=Math.floor(h*scale); const tempC = document.createElement('canvas').getContext('2d'); const getRGB = (color) => { tempC.fillStyle = color; tempC.fillRect(0,0,1,1); return tempC.getImageData(0,0,1,1).data; }; const c1 = getRGB(s.c1), c2 = getRGB(s.c2); let pixels = Array(w*h).fill(0); for(let y=0; y<h; y++) { for(let x=0; x<w; x++) { const val = (x/w); pixels[y*w+x] = val * 255; } } for(let y=0; y<h-1; y++) { for(let x=1; x<w-1; x++) { const idx = y*w+x; const old_p = pixels[idx]; const new_p = Math.round(old_p/255) * 255; const err = old_p - new_p; pixels[idx] = new_p; pixels[idx+1] += err * 7/16; pixels[(y+1)*w+x-1] += err * 3/16; pixels[(y+1)*w+x] += err * 5/16; pixels[(y+1)*w+x+1] += err * 1/16; } } const img = ctx.createImageData(w,h); for(let i=0; i<pixels.length; i++) { const val = pixels[i]/255; const r = c1[0] + (c2[0] - c1[0]) * val; const g = c1[1] + (c2[1] - c1[1]) * val; const b = c1[2] + (c2[2] - c1[2]) * val; img.data[i*4] = r; img.data[i*4+1] = g; img.data[i*4+2] = b; img.data[i*4+3] = 255; } c.imageSmoothingEnabled = false; const tempCanvas = document.createElement('canvas'); tempCanvas.width=w; tempCanvas.height=h; tempCanvas.getContext('2d').putImageData(img,0,0); c.drawImage(tempCanvas, 0, 0, w/scale, h/scale); }};
+    patternImplementations.worleyNoise = { generateState: (c, v) => ({ bg: '#0a0a0a', points: c, smooth: v < 50, colors: Array.from({length: c}, () => colorGenerator()) }), draw: (c, w, h, s) => { c.fillStyle = s.bg; c.fillRect(0,0,w,h); const scale = .25, sw = Math.floor(w * scale), sh = Math.floor(h * scale); if (sw <= 0 || sh <= 0) return; const tC = document.createElement('canvas'); tC.width = sw; tC.height = sh; const tX = tC.getContext('2d'); const p = Array.from({length: s.points}, (_, i) => ({ x: randFloat(0, sw), y: randFloat(0, sh), color: s.colors[i] })); for (let y = 0; y < sh; y++) { for (let x = 0; x < sw; x++) { let cp = p[0], mD = Math.hypot(x - cp.x, y - cp.y); for (let i = 1; i < p.length; i++) { const d = Math.hypot(x - p[i].x, y - p[i].y); if (d < mD) { mD = d; cp = p[i]; } } tX.fillStyle = cp.color; tX.fillRect(x, y, 1, 1); } } c.imageSmoothingEnabled = s.smooth; c.drawImage(tC, 0, 0, w, h); } };
+    
+    // --- NEW PATTERN IMPLEMENTATIONS ---
+
+    // Chaotic Pendulum
+    patternImplementations.chaoticPendulum = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            len1: randFloat(50, 150) * (v / 100 + 0.5),
+            len2: randFloat(50, 150) * (v / 100 + 0.5),
+            mass1: randFloat(5, 15),
+            mass2: randFloat(5, 15),
+            angle1: randFloat(Math.PI / 2, Math.PI * 1.5),
+            angle2: randFloat(Math.PI / 2, Math.PI * 1.5),
+            aVel1: 0,
+            aVel2: 0,
+            g: 1,
+            trailLength: Math.floor(c * 5),
+            color: colorGenerator(),
+            alpha: randFloat(0.05, 0.2)
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+            c.save();
+            c.translate(w / 2, h / 4);
+
+            let x0 = 0, y0 = 0;
+            let x1 = x0 + s.len1 * Math.sin(s.angle1);
+            let y1 = y0 + s.len1 * Math.cos(s.angle1);
+            let x2 = x1 + s.len2 * Math.sin(s.angle2);
+            let y2 = y1 + s.len2 * Math.cos(s.angle2);
+
+            c.strokeStyle = s.color;
+            c.lineWidth = 1;
+            c.globalAlpha = s.alpha;
+
+            for (let i = 0; i < s.trailLength; i++) {
+                const num1 = -s.g * (2 * s.mass1 + s.mass2) * Math.sin(s.angle1);
+                const num2 = -s.mass2 * s.g * Math.sin(s.angle1 - 2 * s.angle2);
+                const num3 = -2 * Math.sin(s.angle1 - s.angle2) * s.mass2;
+                const num4 = s.aVel2 * s.aVel2 * s.len2 + s.aVel1 * s.aVel1 * s.len1 * Math.cos(s.angle1 - s.angle2);
+                const den = s.len1 * (2 * s.mass1 + s.mass2 - s.mass2 * Math.cos(2 * s.angle1 - 2 * s.angle2));
+                const aAcc1 = (num1 + num2 + num3 * num4) / den;
+
+                const num5 = 2 * Math.sin(s.angle1 - s.angle2);
+                const num6 = (s.aVel1 * s.aVel1 * s.len1 * (s.mass1 + s.mass2));
+                const num7 = s.g * (s.mass1 + s.mass2) * Math.cos(s.angle1);
+                const num8 = s.aVel2 * s.aVel2 * s.len2 * s.mass2 * Math.cos(s.angle1 - s.angle2);
+                const den2 = s.len2 * (2 * s.mass1 + s.mass2 - s.mass2 * Math.cos(2 * s.angle1 - 2 * s.angle2));
+                const aAcc2 = (num5 * (num6 - num7 - num8)) / den2;
+
+                s.aVel1 += aAcc1;
+                s.aVel2 += aAcc2;
+                s.angle1 += s.aVel1;
+                s.angle2 += s.aVel2;
+
+                s.aVel1 *= 0.999;
+                s.aVel2 *= 0.999;
+
+                const newX1 = x0 + s.len1 * Math.sin(s.angle1);
+                const newY1 = y0 + s.len1 * Math.cos(s.angle1);
+                const newX2 = newX1 + s.len2 * Math.sin(s.angle2);
+                const newY2 = newY1 + s.len2 * Math.cos(s.angle2);
+
+                c.beginPath();
+                c.moveTo(x2, y2);
+                c.lineTo(newX2, newY2);
+                c.stroke();
+
+                x1 = newX1; y1 = newY1;
+                x2 = newX2; y2 = newY2;
+            }
+            c.globalAlpha = 1;
+            c.restore();
+        }
+    };
+
+    // Apollonian Gasket
+    patternImplementations.apollonianGasket = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            depth: Math.floor(c / 20) + 1,
+            radiusRatio: randFloat(0.4, 0.6) * (v / 100 + 0.5),
+            color: colorGenerator(),
+            strokeColor: colorGenerator(),
+            lineWidth: randFloat(0.5, 3)
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+
+            function drawCircle(cx, cy, r, depth) {
+                if (depth <= 0) return;
+
+                c.beginPath();
+                c.arc(cx, cy, r, 0, Math.PI * 2);
+                c.strokeStyle = s.strokeColor;
+                c.lineWidth = s.lineWidth;
+                c.stroke();
+
+                const newR = r * s.radiusRatio;
+                const dist = r - newR;
+
+                drawCircle(cx, cy - dist, newR, depth - 1);
+                drawCircle(cx - dist * Math.cos(Math.PI / 6), cy + dist * Math.sin(Math.PI / 6), newR, depth - 1);
+                drawCircle(cx + dist * Math.cos(Math.PI / 6), cy + dist * Math.sin(Math.PI / 6), newR, depth - 1);
+            }
+
+            const initialRadius = Math.min(w, h) * 0.4;
+            drawCircle(w / 2, h / 2, initialRadius, s.depth);
+        }
+    };
+
+    // Barnsley Fern
+    patternImplementations.barnsleyFern = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            points: c * 2000,
+            color: colorGenerator(),
+            alpha: randFloat(0.05, 0.2) * (v / 100 + 0.5)
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+
+            let x = 0, y = 0;
+            c.fillStyle = s.color;
+            c.globalAlpha = s.alpha;
+
+            const scaleX = w / 10;
+            const scaleY = h / 10;
+            const offsetX = w / 2;
+            const offsetY = h * 0.9;
+
+            for (let i = 0; i < s.points; i++) {
+                const r = Math.random();
+                let nextX, nextY;
+
+                if (r < 0.01) {
+                    nextX = 0;
+                    nextY = 0.16 * y;
+                } else if (r < 0.86) {
+                    nextX = 0.85 * x + 0.04 * y;
+                    nextY = -0.04 * x + 0.85 * y + 1.6;
+                } else if (r < 0.93) {
+                    nextX = 0.20 * x - 0.26 * y;
+                    nextY = 0.23 * x + 0.22 * y + 1.6;
+                } else {
+                    nextX = -0.15 * x + 0.28 * y;
+                    nextY = 0.26 * x + 0.24 * y + 0.44;
+                }
+                x = nextX;
+                y = nextY;
+
+                c.fillRect(x * scaleX + offsetX, -y * scaleY + offsetY, 1, 1);
+            }
+            c.globalAlpha = 1;
+        }
+    };
+
+    // Mandelbrot Set (handled by Web Worker)
+    patternImplementations.mandelbrotSet = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            maxIterations: Math.floor(c * 2),
+            zoom: randFloat(0.5, 2) * (v / 100 + 0.5),
+            offsetX: randFloat(-0.5, 0.5),
+            offsetY: randFloat(-0.5, 0.5),
+            colors: Array.from({length: Math.floor(c/10)}, () => colorGenerator())
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+        }
+    };
+
+    // Spirograph
+    patternImplementations.spirograph = {
+        generateState: (c, v, z) => {
+            const R = randInt(80, 200);
+            const r = randInt(20, 100);
+            return {
+                bg: '#0a0a0a',
+                R: R,
+                r: r,
+                p: randInt(r * 0.5, r * 1.2) * (v / 100 + 0.5), 
+                steps: c * 20, 
+                lw: randFloat(1, 5),
+                color: colorGenerator(),
+                zoom: z
+            }
+        },
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+            c.save();
+            c.translate(w / 2, h / 2);
+
+            const gcd = (a, b) => (b === 0) ? a : gcd(b, a % b);
+            const numRotations = s.r / gcd(s.R, s.r);
+            const totalAngle = 2 * Math.PI * numRotations;
+            const scale = Math.min(w, h) / ((s.R + s.p) * 2.2) * s.zoom;
+
+            c.strokeStyle = s.color;
+            c.lineWidth = s.lw / s.zoom;
+            c.beginPath();
+
+            for (let t = 0; t <= s.steps; t++) {
+                const angle = totalAngle * (t / s.steps);
+                const x = (s.R - s.r) * Math.cos(angle) + s.p * Math.cos(((s.R - s.r) / s.r) * angle);
+                const y = (s.R - s.r) * Math.sin(angle) - s.p * Math.sin(((s.R - s.r) / s.r) * angle);
+
+                if (t === 0) {
+                    c.moveTo(x * scale, y * scale);
+                } else {
+                    c.lineTo(x * scale, y * scale);
+                }
+            }
+            c.stroke();
+            c.restore();
+        }
+    };
+
+    // Ribbons
+    patternImplementations.ribbons = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            count: c / 2,
+            lw: randFloat(2, 10) * (v / 50),
+            colors: Array.from({length: Math.floor(c/2)}, () => colorGenerator()),
+            amplitude: randFloat(0.1, 0.5),
+            frequency: randFloat(0.005, 0.02),
+            offset: randFloat(0, Math.PI * 2)
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+            c.lineWidth = s.lw;
+            c.lineCap = 'round';
+
+            for (let i = 0; i < s.count; i++) {
+                c.strokeStyle = s.colors[i % s.colors.length];
+                c.beginPath();
+                const startY = (i / s.count) * h;
+                c.moveTo(0, startY);
+
+                for (let x = 0; x <= w; x += 5) {
+                    const y = startY + Math.sin(x * s.frequency + s.offset + i * 0.5) * s.amplitude * h;
+                    c.lineTo(x, y);
+                }
+                c.stroke();
+            }
+        }
+    };
+
+    // Reaction Diffusion (handled by Web Worker)
+    patternImplementations.reactionDiffusion = {
+        generateState: (c, v) => {
+            const presets = [
+                { feed: 0.055, k: 0.062 }, // Mitosis (U-Sketch)
+                { feed: 0.0367, k: 0.0649 }, // Coral Growth
+                { feed: 0.025, k: 0.05 }, // Worms & Spots
+                { feed: 0.04, k: 0.06 }, // Mazes
+                { feed: 0.078, k: 0.061 } // Chaos
+            ];
+            const preset = presets[Math.floor((v / 100) * (presets.length -1))];
+            
+            return {
+                bg: '#0a0a0a',
+                gridSize: Math.floor(100 + c / 2),
+                iterations: 5000, // Fixed high iterations, worker handles performance
+                dA: 1.0, 
+                dB: 0.5, 
+                feed: preset.feed,
+                k: preset.k,
+                colors: [colorGenerator(), colorGenerator()]
+            };
+        },
+        draw: (c, w, h, s) => {
+             c.fillStyle = s.bg;
+             c.fillRect(0, 0, w, h);
+        }
+    };
+
+    // Perlin Flow Field
+    patternImplementations.perlinFlow = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            resolution: Math.floor(20 + c / 2),
+            numParticles: c * 5,
+            particleLife: v * 5,
+            lineLength: randFloat(5, 15),
+            lineWidth: randFloat(0.5, 3),
+            particleColor: colorGenerator(),
+            noiseScale: randFloat(0.005, 0.02)
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+
+            const field = [];
+            const resolution = s.resolution;
+            const cols = Math.floor(w / resolution);
+            const rows = Math.floor(h / resolution);
+
+            for (let i = 0; i < cols; i++) {
+                field[i] = [];
+                for (let j = 0; j < rows; j++) {
+                    const angle = PerlinNoise.noise(i * s.noiseScale, j * s.noiseScale) * Math.PI * 2;
+                    field[i][j] = angle;
+                }
+            }
+
+            const particles = Array.from({ length: s.numParticles }, () => ({
+                x: randFloat(0, w),
+                y: randFloat(0, h),
+                life: s.particleLife,
+                color: colorGenerator()
+            }));
+
+            c.strokeStyle = s.particleColor;
+            c.lineWidth = s.lineWidth;
+            c.globalAlpha = 0.1;
+
+            for (let step = 0; step < s.particleLife; step++) {
+                particles.forEach(p => {
+                    if (p.life <= 0) {
+                        p.x = randFloat(0, w);
+                        p.y = randFloat(0, h);
+                        p.life = s.particleLife;
+                        p.color = colorGenerator();
+                    }
+
+                    const xIndex = Math.floor(p.x / resolution);
+                    const yIndex = Math.floor(p.y / resolution);
+
+                    let angle = 0;
+                    if (xIndex >= 0 && xIndex < cols && yIndex >= 0 && yIndex < rows) {
+                        angle = field[xIndex][yIndex];
+                    } else {
+                        p.x = randFloat(0, w);
+                        p.y = randFloat(0, h);
+                        p.life = s.particleLife;
+                        p.color = colorGenerator();
+                        return;
+                    }
+
+                    const prevX = p.x;
+                    const prevY = p.y;
+
+                    p.x += Math.cos(angle) * s.lineLength;
+                    p.y += Math.sin(angle) * s.lineLength;
+                    p.life--;
+
+                    c.beginPath();
+                    c.moveTo(prevX, prevY);
+                    c.lineTo(p.x, p.y);
+                    c.strokeStyle = p.color;
+                    c.stroke();
+                });
+            }
+            c.globalAlpha = 1;
+        }
+    };
+
+    // Pixel Sort
+    patternImplementations.pixelSort = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            sortThreshold: v / 100,
+            sortDirection: Math.random() > 0.5 ? 'horizontal' : 'vertical',
+            sortMode: ['brightness', 'hue', 'saturation'][randInt(0, 2)],
+            color: colorGenerator()
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = w;
+            tempCanvas.height = h;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            const gradient = tempCtx.createLinearGradient(0, 0, w, h);
+            gradient.addColorStop(0, s.color);
+            gradient.addColorStop(1, s.bg);
+            tempCtx.fillStyle = gradient;
+            tempCtx.fillRect(0, 0, w, h);
+
+            const imageData = tempCtx.getImageData(0, 0, w, h);
+            const pixels = imageData.data;
+
+            const getPixelValue = (r, g, b, mode) => {
+                if (mode === 'brightness') {
+                    return (r + g + b) / 3;
+                } else if (mode === 'hue') {
+                    const max = Math.max(r, g, b);
+                    const min = Math.min(r, g, b);
+                    let h = 0;
+                    if (max !== min) {
+                        const d = max - min;
+                        switch (max) {
+                            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                            case g: h = (b - r) / d + 2; break;
+                            case b: h = (r - g) / d + 4; break;
+                        }
+                        h /= 6;
+                    }
+                    return h * 255;
+                } else if (mode === 'saturation') {
+                    const max = Math.max(r, g, b);
+                    const min = Math.min(r, g, b);
+                    return max === 0 ? 0 : ((max - min) / max) * 255;
+                }
+                return 0;
+            };
+
+            if (s.sortDirection === 'horizontal') {
+                for (let y = 0; y < h; y++) {
+                    let sortSegment = [];
+                    let segmentStart = 0;
+                    for (let x = 0; x < w; x++) {
+                        const i = (y * w + x) * 4;
+                        const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2];
+                        const value = getPixelValue(r, g, b, s.sortMode);
+
+                        if (value / 255 > s.sortThreshold) {
+                            sortSegment.push({ r, g, b, value });
+                        } else {
+                            if (sortSegment.length > 0) {
+                                sortSegment.sort((a, b) => a.value - b.value);
+                                for (let k = 0; k < sortSegment.length; k++) {
+                                    const pixelIdx = (y * w + segmentStart + k) * 4;
+                                    pixels[pixelIdx] = sortSegment[k].r;
+                                    pixels[pixelIdx + 1] = sortSegment[k].g;
+                                    pixels[pixelIdx + 2] = sortSegment[k].b;
+                                }
+                                sortSegment = [];
+                            }
+                            segmentStart = x + 1;
+                        }
+                    }
+                    if (sortSegment.length > 0) {
+                        sortSegment.sort((a, b) => a.value - b.value);
+                        for (let k = 0; k < sortSegment.length; k++) {
+                            const pixelIdx = (y * w + segmentStart + k) * 4;
+                            pixels[pixelIdx] = sortSegment[k].r;
+                            pixels[pixelIdx + 1] = sortSegment[k].g;
+                            pixels[pixelIdx + 2] = sortSegment[k].b;
+                        }
+                    }
+                }
+            } else {
+                for (let x = 0; x < w; x++) {
+                    let sortSegment = [];
+                    let segmentStart = 0;
+                    for (let y = 0; y < h; y++) {
+                        const i = (y * w + x) * 4;
+                        const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2];
+                        const value = getPixelValue(r, g, b, s.sortMode);
+
+                        if (value / 255 > s.sortThreshold) {
+                            sortSegment.push({ r, g, b, value });
+                        } else {
+                            if (sortSegment.length > 0) {
+                                sortSegment.sort((a, b) => a.value - b.value);
+                                for (let k = 0; k < sortSegment.length; k++) {
+                                    const pixelIdx = ((segmentStart + k) * w + x) * 4;
+                                    pixels[pixelIdx] = sortSegment[k].r;
+                                    pixels[pixelIdx + 1] = sortSegment[k].g;
+                                    pixels[pixelIdx + 2] = sortSegment[k].b;
+                                }
+                                sortSegment = [];
+                            }
+                            segmentStart = y + 1;
+                        }
+                    }
+                    if (sortSegment.length > 0) {
+                        sortSegment.sort((a, b) => a.value - b.value);
+                        for (let k = 0; k < sortSegment.length; k++) {
+                            const pixelIdx = ((segmentStart + k) * w + x) * 4;
+                            pixels[pixelIdx] = sortSegment[k].r;
+                            pixels[pixelIdx + 1] = sortSegment[k].g;
+                            pixels[pixelIdx + 2] = sortSegment[k].b;
+                        }
+                    }
+                }
+            }
+            c.putImageData(imageData, 0, 0);
+        }
+    };
+
+    // Data Glitch
+    patternImplementations.dataGlitch = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            glitchAmount: v / 20,
+            glitchCount: c / 5,
+            color: colorGenerator()
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = w;
+            tempCanvas.height = h;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            const gradient = tempCtx.createLinearGradient(0, 0, w, h);
+            gradient.addColorStop(0, s.color);
+            gradient.addColorStop(1, s.bg);
+            tempCtx.fillStyle = gradient;
+            tempCtx.fillRect(0, 0, w, h);
+
+            const imageData = tempCtx.getImageData(0, 0, w, h);
+            const pixels = imageData.data;
+
+            for (let i = 0; i < s.glitchCount; i++) {
+                const startY = randInt(0, h - 1);
+                const height = randInt(1, Math.floor(s.glitchAmount * h / 10));
+                const shift = randInt(-w / 4, w / 4);
+
+                const sourceY = Math.max(0, Math.min(h - 1, startY + randInt(-height, height)));
+                const sourceX = randInt(0, w - 1);
+
+                for (let y = 0; y < height; y++) {
+                    const currentY = startY + y;
+                    if (currentY >= 0 && currentY < h) {
+                        for (let x = 0; x < w; x++) {
+                            const targetX = (x + shift + w) % w;
+
+                            const sourcePixelIndex = (sourceY * w + sourceX) * 4;
+                            const targetPixelIndex = (currentY * w + targetX) * 4;
+
+                            if (targetPixelIndex < pixels.length && sourcePixelIndex < pixels.length) {
+                                pixels[targetPixelIndex] = pixels[sourcePixelIndex];
+                                pixels[targetPixelIndex + 1] = pixels[sourcePixelIndex + 1];
+                                pixels[targetPixelIndex + 2] = pixels[sourcePixelIndex + 2];
+                                pixels[targetPixelIndex + 3] = pixels[sourcePixelIndex + 3];
+                            }
+                        }
+                    }
+                }
+            }
+            c.putImageData(imageData, 0, 0);
+        }
+    };
+
+    // String Art
+    patternImplementations.stringArt = {
+        generateState: (c, v) => ({
+            bg: '#0a0a0a',
+            numPoints: c * 2,
+            numLines: v * 20,
+            lineWidth: randFloat(0.5, 3),
+            lineColor: colorGenerator(),
+            radius: randFloat(0.3, 0.4)
+        }),
+        draw: (c, w, h, s) => {
+            c.fillStyle = s.bg;
+            c.fillRect(0, 0, w, h);
+            c.save();
+            c.translate(w / 2, h / 2);
+
+            const radius = Math.min(w, h) * s.radius;
+            const points = [];
+
+            for (let i = 0; i < s.numPoints; i++) {
+                const angle = (i / s.numPoints) * Math.PI * 2;
+                points.push({
+                    x: radius * Math.cos(angle),
+                    y: radius * Math.sin(angle)
+                });
+            }
+
+            c.strokeStyle = s.lineColor;
+            c.lineWidth = s.lineWidth;
+
+            for (let i = 0; i < s.numLines; i++) {
+                const p1Index = randInt(0, s.numPoints - 1);
+                let p2Index = randInt(0, s.numPoints - 1);
+
+                while (p2Index === p1Index) {
+                    p2Index = randInt(0, s.numPoints - 1);
+                }
+
+                const p1 = points[p1Index];
+                const p2 = points[p2Index];
+
+                c.beginPath();
+                c.moveTo(p1.x, p1.y);
+                c.lineTo(p2.x, p2.y);
+                c.stroke();
+            }
+            c.restore();
+        }
+    };
+    </script>
+    <script id="mandelbrot-worker-script" type="text/javascript">
+        // mandelbrotWorker.js content
+        self.onmessage = function(e) {
+            if (e.data.type === 'generate') {
+                const { width, height, state, isDownload } = e.data;
+                const { maxIterations, zoom, offsetX, offsetY, colors } = state;
+
+                const imgData = new ImageData(width, height);
+                const pixels = imgData.data;
+
+                const minX = -2.5 / zoom + offsetX;
+                const maxX = 1.5 / zoom + offsetX;
+                const minY = -2 / zoom + offsetY;
+                const maxY = 2 / zoom + offsetY;
+
+                const hslToRgb = (hsl) => {
+                    const parts = hsl.match(/\d+/g).map(Number);
+                    let h = parts[0], s = parts[1] / 100, l = parts[2] / 100;
+                    let c = (1 - Math.abs(2 * l - 1)) * s,
+                        x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+                        m = l - c / 2, r = 0, g = 0, b = 0;
+                    if (0 <= h && h < 60) { r = c; g = x; b = 0; } 
+                    else if (60 <= h && h < 120) { r = x; g = c; b = 0; } 
+                    else if (120 <= h && h < 180) { r = 0; g = c; b = x; } 
+                    else if (180 <= h && h < 240) { r = 0; g = x; b = c; } 
+                    else if (240 <= h && h < 300) { r = x; g = 0; b = c; } 
+                    else if (300 <= h && h < 360) { r = c; g = 0; b = x; }
+                    r = Math.round((r + m) * 255);
+                    g = Math.round((g + m) * 255);
+                    b = Math.round((b + m) * 255);
+                    return [r, g, b];
+                };
+
+                const colorRGBs = colors.map(hslToRgb);
+
+                for (let py = 0; py < height; py++) {
+                    for (let px = 0; px < width; px++) {
+                        const x0 = minX + (px / width) * (maxX - minX);
+                        const y0 = minY + (py / height) * (maxY - minY);
+                        let x = 0.0, y = 0.0, iteration = 0;
+                        while (x * x + y * y < 4 && iteration < maxIterations) {
+                            const xtemp = x * x - y * y + x0;
+                            y = 2 * x * y + y0;
+                            x = xtemp;
+                            iteration++;
+                        }
+                        const pixelIndex = (py * width + px) * 4;
+                        if (iteration === maxIterations) {
+                            pixels[pixelIndex] = 0; pixels[pixelIndex + 1] = 0; pixels[pixelIndex + 2] = 0;
+                        } else {
+                            const color = colorRGBs[iteration % colorRGBs.length];
+                            pixels[pixelIndex] = color[0];
+                            pixels[pixelIndex + 1] = color[1];
+                            pixels[pixelIndex + 2] = color[2];
+                        }
+                        pixels[pixelIndex + 3] = 255;
+                    }
+                }
+                self.postMessage({ imageData: { data: pixels.buffer, width: width, height: height }, isDownload }, [pixels.buffer]);
+            }
+        };
+    </script>
+    <script id="reaction-diffusion-worker-script" type="text/javascript">
+        // reactionDiffusionWorker.js content
+        self.onmessage = function(e) {
+            if (e.data.type === 'generate') {
+                const { width, height, state, isDownload } = e.data;
+                const { gridSize, iterations, dA, dB, feed, k, colors } = state;
+
+                let grid = [];
+                for (let i = 0; i < gridSize; i++) {
+                    grid[i] = [];
+                    for (let j = 0; j < gridSize; j++) {
+                        grid[i][j] = { a: 1, b: 0 };
+                    }
+                }
+
+                const seedSize = 10;
+                const startX = Math.floor(gridSize / 2 - seedSize / 2);
+                const startY = Math.floor(gridSize / 2 - seedSize / 2);
+                for (let i = startX; i < startX + seedSize; i++) {
+                    for (let j = startY; j < startY + seedSize; j++) {
+                        if (i > 0 && i < gridSize - 1 && j > 0 && j < gridSize - 1) {
+                            grid[i][j].b = 1;
+                        }
+                    }
+                }
+
+                for (let iter = 0; iter < iterations; iter++) {
+                    let nextGrid = JSON.parse(JSON.stringify(grid));
+                    for (let y = 1; y < gridSize - 1; y++) {
+                        for (let x = 1; x < gridSize - 1; x++) {
+                            const { a, b } = grid[y][x];
+                            
+                            const laplA = (grid[y-1][x].a + grid[y+1][x].a + grid[y][x-1].a + grid[y][x+1].a - 4 * a) * 0.2 + (grid[y-1][x-1].a + grid[y-1][x+1].a + grid[y+1][x-1].a + grid[y+1][x+1].a - 4 * a) * 0.05;
+                            const laplB = (grid[y-1][x].b + grid[y+1][x].b + grid[y][x-1].b + grid[y][x+1].b - 4 * b) * 0.2 + (grid[y-1][x-1].b + grid[y-1][x+1].b + grid[y+1][x-1].b + grid[y+1][x+1].b - 4 * b) * 0.05;
+
+                            const reaction = a * b * b;
+                            nextGrid[y][x].a = a + (dA * laplA - reaction + feed * (1 - a));
+                            nextGrid[y][x].b = b + (dB * laplB + reaction - (k + feed) * b);
+
+                            nextGrid[y][x].a = Math.max(0, Math.min(1, nextGrid[y][x].a));
+                            nextGrid[y][x].b = Math.max(0, Math.min(1, nextGrid[y][x].b));
+                        }
+                    }
+                    grid = nextGrid;
+                }
+                
+                const hslToRgb = (hsl) => {
+                    const parts = hsl.match(/\d+/g).map(Number);
+                    let h = parts[0], s = parts[1] / 100, l = parts[2] / 100;
+                    let c = (1 - Math.abs(2 * l - 1)) * s,
+                        x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+                        m = l - c / 2, r = 0, g = 0, b = 0;
+                    if (0 <= h && h < 60) { r = c; g = x; b = 0; } 
+                    else if (60 <= h && h < 120) { r = x; g = c; b = 0; } 
+                    else if (120 <= h && h < 180) { r = 0; g = c; b = x; } 
+                    else if (180 <= h && h < 240) { r = 0; g = x; b = c; } 
+                    else if (240 <= h && h < 300) { r = x; g = 0; b = c; } 
+                    else if (300 <= h && h < 360) { r = c; g = 0; b = x; }
+                    r = Math.round((r + m) * 255);
+                    g = Math.round((g + m) * 255);
+                    b = Math.round((b + m) * 255);
+                    return [r, g, b];
+                };
+
+                const color1 = hslToRgb(colors[0]);
+                const color2 = hslToRgb(colors[1]);
+                const imgData = new ImageData(width, height);
+                const cellW = width / gridSize;
+                const cellH = height / gridSize;
+
+                for (let y = 0; y < height; y++) {
+                    for (let x = 0; x < width; x++) {
+                        const gridX = Math.floor(x / cellW);
+                        const gridY = Math.floor(y / cellH);
+                        const { a, b } = grid[gridY][gridX];
+                        
+                        const val = Math.max(0, Math.min(1, b - a));
+                        const r = color1[0] + (color2[0] - color1[0]) * val;
+                        const g = color1[1] + (color2[1] - color1[1]) * val;
+                        const b_val = color1[2] + (color2[2] - color1[2]) * val;
+
+                        const idx = (y * width + x) * 4;
+                        imgData.data[idx] = r;
+                        imgData.data[idx+1] = g;
+                        imgData.data[idx+2] = b_val;
+                        imgData.data[idx+3] = 255;
+                    }
+                }
+                self.postMessage({ imageData: { data: imgData.data.buffer, width: width, height: height }, isDownload }, [imgData.data.buffer]);
+            }
+        };
+    </script>
+</body>
+</html>
